@@ -6,8 +6,7 @@ module.exports = (sequelize) => {
   sequelize.define('recipe', {
       id: {
         type: DataTypes.UUID,
-        defaultvalue: DataTypes.UUIDV4,
-        allowNull: false,
+        defaultValue: DataTypes.UUIDV4,
         primaryKey: true, //para relacionar en la tabla intermedia
       },
       title: {
@@ -16,7 +15,7 @@ module.exports = (sequelize) => {
       },
       summary: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
       },
       score: {
         type: DataTypes.STRING,
@@ -25,15 +24,10 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
       },
       steps: {
-        type: DataTypes.JSON
+        type: DataTypes.STRING, 
       },
       image: {
-        type: DataTypes.TEXT
+        type: DataTypes.STRING,
       },
-      isDb: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false,
-        defaultValue: true
-      }
     },{timestamps:false} );
   };

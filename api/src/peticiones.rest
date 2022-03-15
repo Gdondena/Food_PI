@@ -1,0 +1,20 @@
+GET http://localhost:3001/recipes 
+### listo
+POST http://localhost:3001/recipe
+Content-Type: application/json
+
+{ 
+"title": "papita", 
+"summary": "receta de papa",
+"score":"10", 
+"healthScore": "20", 
+"steps": "paso 1 de papa", 
+"image": "sin image",
+"diets": 2
+}  
+### 
+GET http://localhost:3001/types
+###
+GET http://localhost:3001/recipes/3999978847284289382893247374883743875
+###
+GET http://localhost:3001/recipes?name=hola
