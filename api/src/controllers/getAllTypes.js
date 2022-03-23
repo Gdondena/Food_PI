@@ -2,45 +2,34 @@ const axios = require("axios");
 const { API_KEY } = process.env;
 const { Diet } = require("../db");
 
-const getApiInfo = async () => {
-  try {
-    const getTypeUrl = await axios.get(
+const getAllTypes = async () => {
+  const check = await Diet.findOne({ where: { id: 1 } });
+  if (check == null) {
+    const getUrl = await axios.get(
       `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true`
     );
-    const get = getTypeUrl.data?.results.map((el) => {
-      return {
-        id: el.id,
-        title: el.title,
-        image: el.image,
-      };
+    const getInfo = getUrl.data?.results
+      .map((el) => {
+        return [el.diets];
+      })
+      .flat(2)
+      .concat("vegetarian");
+    const result = getInfo.filter((item, index) => {
+      return getInfo.indexOf(item) === index;
     });
-    return getInfo;
-  } catch (error) {
-    return error;
-  }
-};
-
-const getDataBase = async () => {
-  try {
-    return await Recipe.findAll({
-      include: {
-        model: Diet,
-      },
+    console.log("no habia nada");
+    let obj = result.map((o) => {
+      return { name: o };
     });
-  } catch (error) {
-    return error;
-  }
-};
+    let createDb = await Diet.bulkCreate(obj);
 
-const getAllInfo = async () => {
-  const getApi = await getApiInfo();
-  const getDb = await getDataBase();
-  const allInfo = [...getApi, ...getDb]; //esto seria igual que concatenandolo=
-  return allInfo; //getApi.concat(getDb)
+    return createDb;
+  } else {
+    console.log("ya hay algo");
+    return Diet.findAll();
+  }
 };
 
 module.exports = {
-  getApiInfo,
-  getDataBase,
-  getAllInfo,
+  getAllTypes,
 };

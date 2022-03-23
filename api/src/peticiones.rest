@@ -1,5 +1,6 @@
 GET http://localhost:3001/recipes 
 ### listo
+
 POST http://localhost:3001/recipe
 Content-Type: application/json
 
@@ -10,7 +11,7 @@ Content-Type: application/json
 "healthScore": "20", 
 "steps": "paso 1 de papa", 
 "image": "sin image",
-"diets": 2
+"diets": "vegetarian"
 }  
 ### 
 GET http://localhost:3001/types
