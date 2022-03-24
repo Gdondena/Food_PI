@@ -30,16 +30,17 @@ export default function DetailRecipe(){
                         <h1 className={styles.mainTitle}>{detailRecipe.title}</h1>
 
 
-                        <h3 className={styles.subTitle}>Summary:<span>{detailRecipe.summary && detailRecipe.summary.replace(/<[^>]+>/g,"")} </span></h3>
-                        <p className={styles.info}>{detailRecipe.summary}</p>                         
+                        <h3 className={styles.subTitle}>Summary:</h3>
+                        <p className={styles.info}>{detailRecipe.summary}</p> 
+                        <h3 className={styles.subTitle}>Instructions:</h3>
+                        <p className={styles.info}>{detailRecipe.steps}</p>                        
                         <h3 className={styles.subTitle}>Score</h3>
                         <p className={styles.info}>{detailRecipe.score}</p>
                         <h3 className={styles.subTitle}>Health Score</h3>
                         <p className={styles.info}>{detailRecipe.healthScore}</p>
                         <h3 className={styles.subTitle}>Diets</h3>
                         <p className={styles.info}>{detailRecipe.diets?.join(',')}</p>
-                        <h3 className={styles.subTitle}>Instructions:</h3>
-                        <p className={styles.info}>{detailRecipe.instructions && detailRecipe.instructions.replace(/<[^>]+>/g,"")}</p>
+                      
                     </div>
                     
                 

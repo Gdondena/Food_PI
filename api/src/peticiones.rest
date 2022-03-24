@@ -5,13 +5,13 @@ POST http://localhost:3001/recipe
 Content-Type: application/json
 
 { 
-"title": "papita", 
+"title": "sopa", 
 "summary": "receta de papa",
-"score":"10", 
-"healthScore": "20", 
+"score":10, 
+"healthScore": 20, 
 "steps": "paso 1 de papa", 
 "image": "sin image",
-"diets": "vegetarian"
+"diets": ["vegetarian"]
 }  
 ### 
 GET http://localhost:3001/types

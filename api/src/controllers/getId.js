@@ -11,7 +11,7 @@ const getApiId = async (id) => {
     return {
       id: idApi.id,
       title: idApi.title,
-      summary: idApi.summary, //replace(/<[^>]*>?/g, ''), se puede poner esto pero no se bien q es
+      summary: idApi.summary.replace(/<[^>]*>?/g, ''), //replace(/<[^>]*>?/g, ''), se puede poner esto pero no se bien q es
       healthScore: idApi.healthScore,
       image: idApi.image,
       score: idApi.spoonacularScore,

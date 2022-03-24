@@ -8,7 +8,7 @@ export const store = createStore(
   composeWithDevTools(applyMiddleware(thunk))
 );
 
-// Redux Thunk es un middleware que le permite invocar creadores de acciones que devuelven una función en vez de un objeto de acción. 
+// Redux Thunk es un middleware que le permite invocar creadores de acciones que devuelven una función en vez de un objeto (informacion plana) de acción. 
 // Esa función recibe el método de envío de la tienda,
 //  que luego se utiliza para enviar acciones síncronas regulares dentro del cuerpo de 
 //  la función una vez que se completaron las operaciones asíncronas.

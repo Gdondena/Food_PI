@@ -49,7 +49,7 @@ export default function Home(){
         setCurrentPage(1)
         e.preventDefault()
     }
-    //el de la a la z?
+    //el de la a la z
     function handleSortedRecipesTitle(e){
         dispatch(orderByTitle(e.target.value))
         setCurrentPage(1)
@@ -87,8 +87,8 @@ export default function Home(){
                 </select>
                 <select className={styles.selectBar} onChange={e => handleFilteredDiet(e)}>
                     <option value="">Select Diets</option>
-                    {allDiets?.map(diet => {
-                        return ( <option value={diet.name}>{diet.name}</option>)
+                    {allDiets?.map(diets => {
+                        return ( <option value={diets.name}>{diets.name}</option>)
                     })
                 }
                 </select>
@@ -101,7 +101,7 @@ export default function Home(){
                 {currentRecipes?.map(recipe => {
                     return (
                         <Link className={styles.link} to={`/recipe/${recipe.id}`}>
-                        <Card image={recipe.image} title={recipe.title} diets={recipe.diets.map(r => <p className={styles.diet} >{r.name}</p>)} key={recipe.id} ></Card>
+                        <Card image={recipe.image} title={recipe.title} diets={recipe.diets} key={recipe.id} ></Card>
                         </Link>
                         )
                     })

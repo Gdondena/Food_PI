@@ -12,11 +12,13 @@ const getApiInfo = async () => {
         id: el.id,
         title: el.title,
         summary: el.summary,
-        score: el.score,
+        score: el.spoonacularScore,
         healthScore: el.healthScore,
         image: el.image,
         diets: el.diets,
-        instructions: el.instructions
+        steps: el.analyzedInstructions[0]?.steps.map((e) => {
+          return e.step;
+        }),
       };
     });
     return getInfo;
@@ -27,11 +29,15 @@ const getApiInfo = async () => {
 
 const getDataBase = async () => {
   try {
-    return await Recipe.findAll({
+    const RAndD = await Recipe.findAll({
       include: {
         model: Diet,
+        attributes: ["name"],
+        through: { attributes: [] },
       },
     });
+    const newArray = RAndD.filter((element, index, array))
+    return newArray 
   } catch (error) {
     return error;
   }

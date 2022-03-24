@@ -27,11 +27,7 @@ function rootReducer(state = initialState, action) {
         detail: action.payload,
       };
     //filtrados
-    // let filteredDiets = state.recipes?.flat().filter((e) => {
-    //     return e.diets
-    //       ?.split(", ")
-    //       .find((elem) => elem.toLowerCase() === action.payload);
-    //   });
+    
     case "FILTERED_BY_DIETS":
     const allRecipes= state.copyRecipes //copia del estado
             const dietsFilter = action.payload === "All" ? state.copyRecipes :
@@ -55,6 +51,7 @@ function rootReducer(state = initialState, action) {
   //           return {
   //               ...state,
   //               allRecipes: dietFiltered
+    // }
     case "ORDER_BY_TITLE":
       const sortedRecipesTitle =
         action.payload === "Asc"
@@ -81,23 +78,29 @@ function rootReducer(state = initialState, action) {
         allRecipes: sortedRecipesTitle,
       };
     case "ORDER_BY_SPOONACULAR_SCORE":
-
-     
-      let orderScore =
-         action.payload === "high" ?
-         state.allRecipes.sort(function (a, b) {
-
-          return b.score - a.score;
-        }) :
-         state.allRecipes.sort(function (a, b) {
-
-          return a.score - b.score;
-        })
-      
-        return {
-            ...state,
-            allRecipes: orderScore,
-    }; 
+      const orderScore = action.payload === "asc" ? 
+      state.allRecipes.sort(function(a,b){
+      if(a.score > b.score){
+          return 1
+      }
+      if(b.score > a.score){
+          return -1
+      }
+      return 0
+  }) :
+  state.allRecipes.sort(function(a,b){
+      if(a.score > b.score){
+          return -1
+      }
+      if(b.score > a.score){
+          return 1
+      }
+      return 0
+  })
+  return {
+      ...state,
+      allRecipes:  orderScore
+  }
     // const sortedRecipesSpoonScore =
       //   action.payload === "SpoonacularMax"
       //     ? state.allRecipes.sort(function (a, b) {
