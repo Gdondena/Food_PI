@@ -44,10 +44,12 @@ export default function Home(){
     const [score,setScore] = useState("")
 
     // Handle de cada select
-    function handleFilteredDiet(e){
+    function handleFilteredDiet(e) {
+        e.preventDefault()
         dispatch(filteredByDiet(e.target.value))
         setCurrentPage(1)
-        e.preventDefault()
+        
+        console.log(e.target.value)
     }
     //el de la a la z
     function handleSortedRecipesTitle(e){
@@ -82,13 +84,13 @@ export default function Home(){
                 </select>
                 <select className={styles.selectBar} onChange={(e) => handleSortedRecipesSpoonScore(e)}>
                     <option value="" >Select Score</option>
-                    <option value="SpoonacularMax">Max Spoonacular Score</option>
-                    <option value="SpoonacularMin">Min Spoonacular Score</option>
+                    <option value="asc">Max Spoonacular Score</option>
+                    <option value="desc">Min Spoonacular Score</option>
                 </select>
                 <select className={styles.selectBar} onChange={e => handleFilteredDiet(e)}>
                     <option value="">Select Diets</option>
                     {allDiets?.map(diets => {
-                        return ( <option value={diets.name}>{diets.name}</option>)
+                        return ( <option key={diets.id} value={diets.name}>{diets.name}  </option>)
                     })
                 }
                 </select>

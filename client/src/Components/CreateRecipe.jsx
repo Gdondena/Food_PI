@@ -10,6 +10,9 @@ export function validate(input) {
   if (!input.title) {
     error.title = "Please, enter recipe title";
   }
+  // if (!input.image) {
+  //   error.image = "Please, enter recipe image";
+  // }
   if (!input.summary) {
     error.summary = "Please, enter recipe summary";
   }
@@ -39,8 +42,9 @@ export default function Form() {
 
   const [input, setInput] = useState({
     title: "",
+    // image: "",
     summary: "",
-    spoonacularScore: "",
+    score: "",
     healthScore: "",
     steps: "",
     diets: []
@@ -52,16 +56,24 @@ export default function Form() {
 
   
   const [dietas, setDietas] = useState([])
+  // const handleSelectDiets = (e) => {
+  //   // console.log(e.target)
+  //   e.preventDefault();
+  //   if (input.diets?.includes(parseInt(e.target.value))) {
+  //     alert("Diet's already been selected");
+  //   } else {
+  //     dietsState?.map(d => d.id === parseInt(e.target.value) && setDietas([...dietas, d]))
+  //     setInput({ ...input, diets: [...input.diets, parseInt(e.target.value)] });
+  //   }
+  // };
+
   const handleSelectDiets = (e) => {
-    // console.log(e.target)
     e.preventDefault();
-    if (input.diets?.includes(parseInt(e.target.value))) {
-      alert("Diet's already been selected");
-    } else {
-      dietsState?.map(d => d.id === parseInt(e.target.value) && setDietas([...dietas, d]))
-      setInput({ ...input, diets: [...input.diets, parseInt(e.target.value)] });
-    }
-  };
+    setInput({
+        ...input,
+        diets: [...input.diets, e.target.value]
+    })
+  }
   
   const [errors, setErrors] = useState({});
   
@@ -71,25 +83,26 @@ export default function Form() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!input.title){
-      e.preventDefault();
-      alert("Empty form, please complete");
-    } else if (Object.keys(errors).length !== 0){
-      e.preventDefault();
-      alert("Please complete all the fields");
-    } else if (Object.keys(errors).length === 0) {
+    // if (!input.title){
+    //   // e.preventDefault();
+    //   alert("Empty form, please complete");
+    // } else if (Object.keys(errors).length !== 0){
+    //   alert("Please complete all the fields");
+    // } else if (Object.keys(errors).length === 0) {
       dispatch(postRecipe(input));
+      alert("receta creada con exito")
       setInput({
         title: "",
+        // image: "",
         summary: "",
-        spoonacularScore: "",
+        score: "",
         healthScore: "",
         steps: "",
         diets: []
       });
       window.location.href = "/home";
     };
-  }
+  
     
     
   const handleChange = (e) => {
@@ -127,7 +140,10 @@ export default function Form() {
       <div className={styles.form}>
         <div className={styles.title}>Welcome!</div>
         <div className={styles.subtitle}>Let's create your own recipe!</div>
-        <form onSubmit={handleSubmit}>
+
+        <form onSubmit={e => handleSubmit(e)}>
+
+
           <div className={styles.inputContainer}>
             <input
               className={styles.input}
@@ -139,6 +155,17 @@ export default function Form() {
             />
 
             {errors.title && <p className={styles.danger}>{errors.title}</p>}
+
+            
+            {/* <input
+              className={styles.input}
+              placeholder="Recipe image"
+              type="text"
+              name="image"
+              value={input.image}
+              onChange={handleChange}
+            /> */}
+
 
             <textarea
               className={styles.input}
@@ -158,8 +185,8 @@ export default function Form() {
                 className={styles.input}
                 placeholder="Recipe score"
                 type="number"
-                name="spoonacularScore"
-                value={input.spoonacularScore}
+                name="score"
+                value={input.score}
                 onChange={handleChange}
               />
               <input
@@ -172,7 +199,7 @@ export default function Form() {
               />
             </div>
 
-            {errors.spoonacularScore && <p className={styles.danger}>{errors.spoonacularScore}</p>}
+            {errors.score && <p className={styles.danger}>{errors.score}</p>}
             {errors.healthScore && (
               <p className={styles.danger}>{errors.healthScore}</p>
             )}
@@ -194,7 +221,7 @@ export default function Form() {
                 return (
                   <option
                     key={diet.id}
-                    value={diet.id}
+                    value={diet.name}
                     name={diet.name}
                   >
                     {diet.name}

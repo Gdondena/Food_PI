@@ -36,8 +36,22 @@ const getDataBase = async () => {
         through: { attributes: [] },
       },
     });
-    const newArray = RAndD.filter((element, index, array))
-    return newArray 
+    const newArray = [...RAndD];
+
+    const otherArray = newArray.map((recipe) => {
+      return {
+        id: recipe.id,
+        image: recipe.image,
+        title: recipe.title,
+        summary: recipe.summary,
+        score: recipe.score,
+        healthScore: recipe.healthScore,
+        steps: recipe.steps,
+        diets: recipe.diets.map((r) => r.name),
+      };
+    });
+
+    return otherArray;
   } catch (error) {
     return error;
   }

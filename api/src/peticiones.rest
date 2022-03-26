@@ -5,17 +5,17 @@ POST http://localhost:3001/recipe
 Content-Type: application/json
 
 { 
-"title": "sopa", 
+"title": "tecito", 
 "summary": "receta de papa",
 "score":10, 
 "healthScore": 20, 
 "steps": "paso 1 de papa", 
 "image": "sin image",
-"diets": ["vegetarian"]
+"diets": ["vegan", "vegetarian"]
 }  
 ### 
 GET http://localhost:3001/types
 ###
-GET http://localhost:3001/recipes/3999978847284289382893247374883743875
+GET http://localhost:3001/recipes/7b2df2ec-c751-4eff-9c00-94046e7bb9ab
 ###
 GET http://localhost:3001/recipes?name=hola

@@ -78,7 +78,7 @@ export function searchRecipe(name){
 export function postRecipe(payload){
     return async function(dispatch){//este dispatch no lo use, ver que pasa si lo borro
         try {
-            var json = await axios.post(`http://localhost:3001/recipes/create`, payload)
+            var json = await axios.post(`http://localhost:3001/recipe`, payload)
             return json
         } catch (error) {
             console.log(error)
