@@ -70,6 +70,9 @@ export function searchRecipe(name){
                 payload: json.data
             })  
         } catch (error) {
+            return dispatch ({
+                type: "SEARCH_RECIPE_FAILED",
+            })
             console.log(error)
         }
     }

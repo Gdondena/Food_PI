@@ -9,14 +9,15 @@ export default function Card({title, name, diets, id, image}){
       <div key={id} className={styles.cuerpoTarjeta}>
         <img className={styles.imagen} src={image} alt={name} />
         <h3>{title}</h3>
+        <h4 className={styles.listTitle}>
                         <ul>
-                            {
-                                diets.map((e)=>(
+                            {    
+                                diets.map((e)=> (
                                     <li>{e}</li>
                                 ))
                             }
                         </ul>
-        
+        </h4>
         {/* <p>score: {props.score}</p>
       <p>health Score: {props.healthScore}</p> */}
         <div className={styles.contenedorVerMas}>

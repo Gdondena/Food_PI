@@ -42,7 +42,7 @@ export default function Form() {
 
   const [input, setInput] = useState({
     title: "",
-    // image: "",
+    image: "",
     summary: "",
     score: "",
     healthScore: "",
@@ -93,7 +93,7 @@ export default function Form() {
       alert("receta creada con exito")
       setInput({
         title: "",
-        // image: "",
+        image: "",
         summary: "",
         score: "",
         healthScore: "",
@@ -157,14 +157,14 @@ export default function Form() {
             {errors.title && <p className={styles.danger}>{errors.title}</p>}
 
             
-            {/* <input
+            <input
               className={styles.input}
               placeholder="Recipe image"
               type="text"
               name="image"
               value={input.image}
               onChange={handleChange}
-            /> */}
+            />
 
 
             <textarea

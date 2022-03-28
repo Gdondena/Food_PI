@@ -3,6 +3,7 @@ const initialState = {
   copyRecipes: [], // para hacerle filtros y guardar el state
   diets: [], // me traigo las dietas
   detail: [], // me trago el detalle de cada una por id
+  errorMessage: "",
   // defaultRecipes: [],
 };
 
@@ -14,6 +15,7 @@ function rootReducer(state = initialState, action) {
         allRecipes: action.payload,
         copyRecipes: action.payload,
         // defaultRecipes : action.payload
+        errorMessage: "", //vacio mensaje de error
         detail: [],
       };
     case "GET_DIETS_TYPES":
@@ -96,36 +98,19 @@ function rootReducer(state = initialState, action) {
         ...state,
         allRecipes: orderScore,
       };
-    // const sortedRecipesSpoonScore =
-    //   action.payload === "SpoonacularMax"
-    //     ? state.allRecipes.sort(function (a, b) {
-    //         if (a.spoonacularScore < b.spoonacularScore) {
-    //           return 1;
-    //         }
-    //         if (b.spoonacularScore < a.spoonacularScore) {
-    //           return -1;
-    //         }
-    //         return 0;
-    //       })
-    //     : state.allRecipes.sort(function (a, b) {
-    //         if (a.spoonacularScore < b.spoonacularScore) {
-    //           return -1;
-    //         }
-    //         if (b.spoonacularScore < a.spoonacularScore) {
-    //           return 1;
-    //         }
-    //         return 0;
-    //       });
-    // return {
-    //   ...state,
-    //   allRecipes: sortedRecipesSpoonScore,
-    // };
     //es para el search
     case "SEARCH_RECIPE":
       return {
         ...state,
         allRecipes: action.payload,
       };
+      case "SEARCH_RECIPE_FAILED":
+        return {
+          ...state,
+          
+          errorMessage: "No hay resultados",
+          allRecipes: [],
+        };
     default:
       return state;
   }

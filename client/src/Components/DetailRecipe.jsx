@@ -4,6 +4,8 @@ import { useDispatch , useSelector } from "react-redux";
 import { useEffect , useState} from "react";
 import { getDetail } from "../actions";
 import styles from "../Styles/DetailRecipe.module.css"
+import img from "../img/img2.jpg";
+
 
 export default function DetailRecipe(){
     
@@ -15,43 +17,70 @@ export default function DetailRecipe(){
     useEffect(() => {
         dispatch(getDetail(recipeId.id))
     },[dispatch])
+    
+    let image;
+  detailRecipe.image ? (image = detailRecipe.image) : (image = img);
 
     return (
-        <div className={styles.container}>
-            <div>
-            {
-                (detailRecipe.length === 0) ? 
-                    <div className={styles.container}>
-                        <p className={styles.loading}>Loading ...</p>
-                    </div> 
-                :
-                    <div className={styles.box}>
-                        <img className={styles.image} src={detailRecipe.image} alt="No Image Found"/>
-                        <h1 className={styles.mainTitle}>{detailRecipe.title}</h1>
-
-
-                        <h3 className={styles.subTitle}>Summary:</h3>
-                        <p className={styles.info}>{detailRecipe.summary}</p> 
-                        <h3 className={styles.subTitle}>Instructions:</h3>
-                        <p className={styles.info}>{detailRecipe.steps}</p>                        
-                        <h3 className={styles.subTitle}>Score</h3>
-                        <p className={styles.info}>{detailRecipe.score}</p>
-                        <h3 className={styles.subTitle}>Health Score</h3>
-                        <p className={styles.info}>{detailRecipe.healthScore}</p>
-                        <h3 className={styles.subTitle}>Diets</h3>
-                        <p className={styles.info}>{detailRecipe.diets?.join(',')}</p>
-                      
-                    </div>
-                    
-                
-            }
+        <div className={styles.cuerpo}>
+        <div>
+            <div className={styles.cuerpoPagina}>
+            
+              <div className={styles.cuerpoTarjeta}>
+              <img
+                className={styles.imagen}
+                src={image}
+                alt={detailRecipe.title}
+              />
+              <h1>{detailRecipe.title}</h1>
+              <p>Score: {detailRecipe.score}</p>
+              <p>Healty Score: {detailRecipe.healthScore}</p>
+              <p>{detailRecipe.diets?.join(',')}</p>
+              <p>Summary: {detailRecipe.summary}</p>
+              <p>Instructions: {detailRecipe.steps}</p>
             </div>
-            <div className={styles.boxButton}>
+            </div>
+
+          <div className={styles.boxButton}>
                 <Link to="/home">
                     <button className={styles.button} >Go back!</button>
                 </Link>
             </div>
-        </div>
-    )
+       </div>
+       </div>
+       
+    );
 
 }
+
+
+        // <div className={styles.container}>
+        //     <div>
+        //     {
+        //         (detailRecipe.length === 0) ? 
+        //             <div className={styles.container}>
+        //                 <p className={styles.loading}>Loading ...</p>
+        //             </div> 
+        //         :
+        //             <div className={styles.box}>
+        //                 <img className={styles.image} src={detailRecipe.image} alt="No Image Found"/>
+        //                 <h1 className={styles.mainTitle}>{detailRecipe.title}</h1>
+
+
+        //                 <h3 className={styles.subTitle}>Summary:</h3>
+        //                 <p className={styles.info}>{detailRecipe.summary}</p> 
+        //                 <h3 className={styles.subTitle}>Instructions:</h3>
+        //                 <p className={styles.info}>{detailRecipe.steps}</p>                        
+        //                 <h3 className={styles.subTitle}>Score</h3>
+        //                 <p className={styles.info}>{detailRecipe.score}</p>
+        //                 <h3 className={styles.subTitle}>Health Score</h3>
+        //                 <p className={styles.info}>{detailRecipe.healthScore}</p>
+        //                 <h3 className={styles.subTitle}>Diets</h3>
+        //                 <p className={styles.info}>{detailRecipe.diets?.join(',')}</p>
+                      
+        //             </div>
+                    
+                
+        //     }
+        //     </div>
+  

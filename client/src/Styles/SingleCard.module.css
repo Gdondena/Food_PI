@@ -71,3 +71,10 @@
   opacity: .4;
   margin-top: 40px;
 }
+
+.listTitle{
+  font-size: 20px;
+  font-weight: lighter;
+  color: white;
+  text-decoration: none;
+}
