@@ -9,8 +9,8 @@ const router = Router();
 //   - Obtener un listado de las recetas que contengan la palabra ingresada como query parameter
 //   - Si no existe ninguna receta mostrar un mensaje adecuado
 router.get("/", async (req, res) => {
+  const { name } = req.query;
   try {
-    const { name } = req.query;
     const recipes = await getAllInfo();
     if (name) {
       const existName = recipes.filter((e) =>
@@ -30,8 +30,8 @@ router.get("/", async (req, res) => {
 // - [ ] __GET /recipes/{idReceta}__:
 //   - Obtener el detalle de una receta en particular
 //   - Debe traer solo los datos pedidos en la ruta de detalle de receta
-//   - Incluir los tipos de dieta asociados. //  EN POKEMON ERA: Tener en cuenta que tiene que funcionar tanto para un id de un pokemon existente en pokeapi o uno creado por ustedes
-//ESO ULTIMO ESTA EN CONTROLLERS, CON EL INCLUDE
+//   - Incluir los tipos de dieta asociados.
+
 router.get("/:idRecipe", async (req, res) => {
   const { idRecipe } = req.params;
 

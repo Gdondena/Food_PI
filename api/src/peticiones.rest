@@ -19,3 +19,5 @@ GET http://localhost:3001/types
 GET http://localhost:3001/recipes/7b2df2ec-c751-4eff-9c00-94046e7bb9ab
 ###
 GET http://localhost:3001/recipes?name=hola
+###
+GET http://localhost:3001/recipes?filtro=db

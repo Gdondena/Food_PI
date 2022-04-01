@@ -29,17 +29,11 @@ export default function Home(){
     const indexOfFirstRecipe = indexOfLastRecipe - recipesPerPage
     const currentRecipes = allRecipes.slice(indexOfFirstRecipe,indexOfLastRecipe)
 
-    const paginado = (pageNumber) => {
-        setCurrentPage(pageNumber)
+    const page = (pageNumbers) => {
+        setCurrentPage(pageNumbers)
     }
 
-    // //aca es para que se te carguen de nuevo las recetas
-    // function handleClick (e){
-    //     e.preventDefault();
-    //     dispatch(getRecipes());
-    // } REVISAAAAR
-    
-    // estados locales para renderizar los globales
+   
     const [order,setOrder] = useState("")
     const [score,setScore] = useState("")
 
@@ -62,7 +56,7 @@ export default function Home(){
     function handleSortedRecipesSpoonScore(e){
         dispatch(orderBySpoonacularScore(e.target.value))
         setCurrentPage(1)
-        setScore(e.target.value) //el value viene del payload, es el valor que esta abajo
+        setScore(e.target.value) 
         e.preventDefault()
     }
 
@@ -97,7 +91,9 @@ export default function Home(){
                 <SearchBar></SearchBar>
             </div>
             <div className={styles.paginadoContainer}>
-                <Paginado recipesPerPage={recipesPerPage} allRecipes={allRecipes.length} paginado={paginado}></Paginado>
+                <Paginado recipesPerPage={recipesPerPage} allRecipes={allRecipes.length} page = { page }
+                currentPage = { currentPage }
+                setCurrentPage = {setCurrentPage}></Paginado>
             </div>
             <div className={styles.recipeContainer}>
                 {currentRecipes?.map(recipe => {
@@ -110,7 +106,9 @@ export default function Home(){
                 }
             </div>
             <div  className={styles.paginadoContainer}>
-                <Paginado recipesPerPage={recipesPerPage} allRecipes={allRecipes.length} paginado={paginado}></Paginado>
+                <Paginado recipesPerPage={recipesPerPage} allRecipes={allRecipes.length} page = { page }
+                currentPage = { currentPage }
+                setCurrentPage = {setCurrentPage}></Paginado>
             </div>        
         </div>
     )

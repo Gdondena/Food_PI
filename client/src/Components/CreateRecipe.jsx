@@ -4,23 +4,24 @@ import { postRecipe , getDiets} from "../actions"
 import { useDispatch , useSelector } from "react-redux"
 import styles from "../Styles/CreateRecipe.module.css"
 
+
 export function validate(input) {
   let error = {};
 
-  if (!input.title) {
+  if (!input.title ) {
     error.title = "Please, enter recipe title";
   }
-  // if (!input.image) {
-  //   error.image = "Please, enter recipe image";
-  // }
+  if (!input.image) {
+    error.image = "Please, enter recipe image";
+  }
   if (!input.summary) {
     error.summary = "Please, enter recipe summary";
   }
-  if (!input.spoonacularScore) {
-    error.spoonacularScore = "Please, enter recipe score";
+  if (!input.score) {
+    error.score = "Please, enter recipe score";
   }
-  if (input.spoonacularScore < 0 || input.spoonacularScore > 100) {
-    error.spoonacularScore = "Please, enter a valid score. (Must be between 0 and 100)";
+  if (input.score < 0 || input.score > 100) {
+    error.score = "Please, enter a valid score. (Must be between 0 and 100)";
   }
   if (!input.healthScore) {
     error.healthScore = "Please, enter recipe health score";
@@ -39,7 +40,8 @@ export function validate(input) {
 export default function Form() {
   const dispatch = useDispatch();
   const dietsState = useSelector((state) => state.diets);
-
+  const [errors, setErrors] = useState({});
+  
   const [input, setInput] = useState({
     title: "",
     image: "",
@@ -55,40 +57,31 @@ export default function Form() {
   }, [dispatch]);
 
   
-  const [dietas, setDietas] = useState([])
-  // const handleSelectDiets = (e) => {
-  //   // console.log(e.target)
-  //   e.preventDefault();
-  //   if (input.diets?.includes(parseInt(e.target.value))) {
-  //     alert("Diet's already been selected");
-  //   } else {
-  //     dietsState?.map(d => d.id === parseInt(e.target.value) && setDietas([...dietas, d]))
-  //     setInput({ ...input, diets: [...input.diets, parseInt(e.target.value)] });
-  //   }
-  // };
+  function handleSelectDiets(e){
+        if(input.diets.includes(e.target.value)){
+            alert("Diet's already been selected")
+        }else{
+            setInput({
+                ...input,
+                diets:[...input.diets, e.target.value]
+            });
+            setErrors(validate({
+                ...input,
+                diets:[...input.diets, e.target.value]
+            }))
+        }
+    }
 
-  const handleSelectDiets = (e) => {
-    e.preventDefault();
-    setInput({
-        ...input,
-        diets: [...input.diets, e.target.value]
-    })
-  }
-  
-  const [errors, setErrors] = useState({});
-  
-  // useEffect(() => {
-  //   console.log(Object.values(input))
-  // })
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // if (!input.title){
-    //   // e.preventDefault();
-    //   alert("Empty form, please complete");
-    // } else if (Object.keys(errors).length !== 0){
-    //   alert("Please complete all the fields");
-    // } else if (Object.keys(errors).length === 0) {
+    if (!input.title) {
+      // e.preventDefault();
+      alert("Empty form, please complete");
+    } else if (Object.keys(errors).length !== 0) {
+      alert("Please complete all the fields");
+    } else if (Object.keys(errors).length === 0) {
       dispatch(postRecipe(input));
       alert("receta creada con exito")
       setInput({
@@ -102,6 +95,7 @@ export default function Form() {
       });
       window.location.href = "/home";
     };
+  };
   
     
     
@@ -118,31 +112,25 @@ export default function Form() {
     );
   };
 
-  function handleDelete(e) {
-    let dietsFiltered = dietas?.filter((el) => el.name !== e.name);
-    console.log(e)
-    console.log(dietsFiltered) 
+ 
 
-    setInput({
-      ...input,
-      diets: dietsFiltered?.map(e => e.id)
-    });
-    setDietas(dietsFiltered)
-  }
+  function handleDelete(e){
+        setInput({
+            ...input,
+            diets: input.diets.filter((diet)=> diet !== e)
+        })
+    }
 
   return (
-    <div className={styles.cuerpo}>
+    <>
       <nav className={styles.nav}>
         <Link to="/home" className={styles.link}>
           Home
         </Link>
       </nav>
-      <div className={styles.form}>
-        <div className={styles.title}>Welcome!</div>
-        <div className={styles.subtitle}>Let's create your own recipe!</div>
-
-        <form onSubmit={e => handleSubmit(e)}>
-
+        <form className={styles.form} onSubmit={e => handleSubmit(e)}>
+        <h1 className={styles.title}>Welcome!</h1>
+        <h2 className={styles.subtitle}>Let's create your own recipe!</h2>
 
           <div className={styles.inputContainer}>
             <input
@@ -212,44 +200,35 @@ export default function Form() {
               value={input.steps}
               onChange={handleChange}
             />
-            <select
-              className={styles.input}
-              onChange={(e) => handleSelectDiets(e)}
-            >
-              <option label={"Select diet"} disabled selected></option>
-              {dietsState && typeof(dietsState[0]) !== "array"?dietsState.map((diet) => {
-                return (
-                  <option
-                    key={diet.id}
-                    value={diet.name}
-                    name={diet.name}
-                  >
-                    {diet.name}
-                  </option>
-                );
-              }): false}
-            </select>
+            <div >
+                        <select className={styles.input} onChange={handleSelectDiets} >
+                            <option label={"Select diet"} disabled selected></option>
+                            {
+                                dietsState.map((diet)=>(
+                                    <option key={diet.id} value={input.diets.name} >{diet.name}</option>
+                                ))
+                            }
+                        </select>
+                        {errors.diets && (<p className={styles.danger}>{errors.diets}</p>)}
+                    </div>
 
-            <div className={styles.inputGroup}>
-              {dietas?.map((d) => {
-                return (
-                  <div
-                    key={d.id}
-                    className={styles.inputTemp}
-                    onClick={() => handleDelete(d)}
-                  >
-                    {d.name}
-                    <p className={styles.texto}> Click to delete</p>
-                  </div>
-                );
-              })}
-            </div>
+             <div>
+                            {
+                                input.diets.map((e)=>(
+                                    <li className={styles.input} key={e}>
+                                        {e} 
+                                       <button  className={styles.buttondelete} onClick={()=>{handleDelete(e)}} >X</button>
+                                    </li>
+                                ))
+                            }
+ 
+                    </div>
             <button className={styles.button} >
               Create
             </button>
           </div>
         </form>
-      </div>
-    </div>
+      </>
+    
   );
 }

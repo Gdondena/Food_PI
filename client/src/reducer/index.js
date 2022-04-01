@@ -1,10 +1,8 @@
 const initialState = {
-  allRecipes: [], // me trae todo
-  copyRecipes: [], // para hacerle filtros y guardar el state
-  diets: [], // me traigo las dietas
-  detail: [], // me trago el detalle de cada una por id
-  errorMessage: "",
-  // defaultRecipes: [],
+  allRecipes: [],
+  copyRecipes: [],
+  diets: [],
+  detail: [],
 };
 
 function rootReducer(state = initialState, action) {
@@ -14,8 +12,6 @@ function rootReducer(state = initialState, action) {
         ...state,
         allRecipes: action.payload,
         copyRecipes: action.payload,
-        // defaultRecipes : action.payload
-        errorMessage: "", //vacio mensaje de error
         detail: [],
       };
     case "GET_DIETS_TYPES":
@@ -28,6 +24,12 @@ function rootReducer(state = initialState, action) {
         ...state,
         detail: action.payload,
       };
+    case "GET_CLEAN":
+      return {
+        ...state,
+        detail: [],
+      };
+
     //filtrados
 
     case "FILTERED_BY_DIETS":
@@ -36,14 +38,6 @@ function rootReducer(state = initialState, action) {
         action.payload === ""
           ? recipes
           : recipes.filter((recipe) => recipe.diets.includes(action.payload));
-      // action.payload === ""
-      //   ? recipes
-      //   : recipes.filter((recipe) => {
-      //       let diet = recipe.diets.map((d) => d.name);
-      //       if (diet.includes(action.payload)) {
-      //         return recipe;
-      //       }
-      //     });
       return {
         ...state,
         allRecipes: dietFiltered,
@@ -104,13 +98,6 @@ function rootReducer(state = initialState, action) {
         ...state,
         allRecipes: action.payload,
       };
-      case "SEARCH_RECIPE_FAILED":
-        return {
-          ...state,
-          
-          errorMessage: "No hay resultados",
-          allRecipes: [],
-        };
     default:
       return state;
   }

@@ -5,7 +5,7 @@ const { Recipe, Diet } = require("../db");
 const getApiInfo = async () => {
   try {
     const getUrl = await axios.get(
-      `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true`
+      `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true&number=100`
     );
     const getInfo = getUrl.data?.results.map((el) => {
       return {
@@ -56,6 +56,24 @@ const getDataBase = async () => {
     return error;
   }
 };
+
+// const fusionApiDb = async () => {
+//   const apiii = await getApiInfo();
+//   const guardar = apiii.create({
+//     return{
+//         id: el.id,
+//         title: el.title,
+//         summary: el.summary,
+//         score: el.spoonacularScore,
+//         healthScore: el.healthScore,
+//         image: el.image,
+//         diets: el.diets,
+//         steps: el.analyzedInstructions[0]?.steps.map((e) => {
+//           return e.step;
+//         }),
+//   })
+// }
+// guardar.addgetDb()
 
 const getAllInfo = async () => {
   const getApi = await getApiInfo();
